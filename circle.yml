@@ -1,0 +1,49 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  services:
+    - docker
+  python:
+    version: 2.7.12
+
+dependencies:  
+  pre:
+    - pip install ansible
+    - pip install --upgrade setuptools
+
+test:
+  pre:
+    - echo "--- build start ---"
+    - docker build -t centos6.8/nginx-rpm -f dockerfile-6.8 .
+    - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
+    commands:
+      - cp $CIRCLE_ARTIFACTS/*.rpm .
+      - ansible-playbook staging/deploy.yml -i staging/vars --vault-password-file ~/.vault_password.txt
+  override:
+    ## sample
+    # - docker run -i -t inokappa/circleci-test /spec_start.sh
+    - ./scripts/run-tests.sh
+  # post:
+
+deployment:
+  release:
+    branch: master
+    commands:
+      - go get github.com/aktau/github-release
+      - cp $CIRCLE_ARTIFACTS/*.rpm .
+      - /bin/sh ./github-release.sh
+#  develop:
+#    branch: develop
+#    commands:
+#      - bundle install
+#      - bundle exec cap production deploy
+#  staging:
+#    branch: master
+#    commands:
+#      - bundle install
+#      - bundle exec cap staging deploy
+#  production:
+#    branch: release
+#    commands:
+#      - bundle install
+#      - bundle exec cap production deploy

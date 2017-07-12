@@ -1,0 +1,29 @@
+FROM centos:6.8
+MAINTAINER fabrefas4you
+
+# setup
+RUN yum update -y
+RUN yum install -y rpm-build tar git libtool automake autoconf autoheader autoreconf 
+
+# for mod_secirity
+RUN yum install -y httpd-devel apache2-prefork-dev apache2-threaded-dev apr-util-devel httpd-tools
+
+# nginx depends
+RUN yum -y install readline-devel ncurses-devel gdbm-devel glibc-devel gcc openssl-devel libyaml-devel libffi-devel zlib-devel \
+apr apr-devel apr-util apr-util-devel pcre pcre-devel libxml2 libxml2-devel curl curl-devel libxslt-devel
+
+RUN useradd docker
+
+# build
+RUN mkdir -p /var/tmp/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+RUN chown -R docker /var/tmp/rpmbuild
+WORKDIR /var/tmp/rpmbuild
+ADD nginxbuild.sh /var/tmp/rpmbuild/nginxbuild.sh
+ADD nginx1x.spec /var/tmp/rpmbuild/SPECS/nginx1x.spec
+ADD nginx-version /var/tmp/rpmbuild/nginx-version
+ADD openssl-version /var/tmp/rpmbuild/openssl-version
+ADD nginx.service /var/tmp/rpmbuild/SOURCES/nginx.service
+ADD nginx.conf /var/tmp/rpmbuild/SOURCES/nginx.conf
+ADD nginx.init /var/tmp/rpmbuild/SOURCES/nginx.init
+ADD nginx.sysconfig /var/tmp/rpmbuild/SOURCES/nginx.sysconfig
+ADD logrotate /var/tmp/rpmbuild/SOURCES/logrotate
