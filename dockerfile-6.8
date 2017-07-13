@@ -3,7 +3,7 @@ MAINTAINER fabrefas4you
 
 # setup
 RUN yum update -y
-RUN yum install -y rpm-build tar git libtool automake autoconf autoheader autoreconf 
+RUN yum install -y rpm-build tar git libtool automake autoconf autoheader autoreconf vim git sudo
 
 # for mod_secirity
 RUN yum install -y httpd-devel apache2-prefork-dev apache2-threaded-dev apr-util-devel httpd-tools
@@ -17,12 +17,13 @@ RUN useradd docker \
     && passwd -d docker \
     && mkdir -p /home/docker \
     && chown docker:docker /home/docker \
-    && addgroup docker staff \
-    && addgroup docker sudo \
     && echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/docker \
     && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config \
     && sed -i "s/PermitRootLogin without-password/PermitRootLogin yes/" /etc/ssh/sshd_config \
     && true
+
+# restart sshd
+RUN /etc/init.d/sshd restart
 
 # build
 RUN mkdir -p /var/tmp/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
