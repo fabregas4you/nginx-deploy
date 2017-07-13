@@ -18,8 +18,8 @@ RUN useradd docker \
     && mkdir -p /home/docker \
     && chown docker:docker /home/docker \
     && echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/docker \
-    && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config \
-    && sed -i "s/PermitRootLogin without-password/PermitRootLogin yes/" /etc/ssh/sshd_config \
+    && sed -ri "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config \
+    && sed -ri "s/PermitRootLogin without-password/PermitRootLogin yes/" /etc/ssh/sshd_config \
     && true
 
 # restart sshd
