@@ -10,18 +10,22 @@ dependencies:
   pre:
     - pip install ansible
     - pip install --upgrade setuptools
+    - docker build -t centos6.8/nginx-rpm -f dockerfile-6.8 .
+    - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
 
 test:
   pre:
-    - docker build -t centos6.8/nginx-rpm -f dockerfile-6.8 .
-    - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
-    commands:
-      - cp $CIRCLE_ARTIFACTS/*.rpm .
-      - ansible-playbook staging/deploy.yml -i staging/vars --vault-password-file ~/.vault_password.txt
+    - bundle -j4 --path=vendor/bundle
+    - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/config ~/.ssh/config
+    - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/id_rsa ~/.ssh/id_rsa
+    - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
+    - sudo chown 600 ~/.ssh/id_rsa
   override:
     ## sample
-    # - docker run -i -t inokappa/circleci-test /spec_start.sh
-    - ./scripts/run-tests.sh
+    # - docker run -i -t bokiboki/circleci-test /spec_start.sh
+    - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" docker
+    - cd ansible && ansible-playbook -i inventory playbook.yml
+    - cd serverspec && bundle exec rake spec
   # post:
 
 deployment:
@@ -31,18 +35,3 @@ deployment:
       - go get github.com/aktau/github-release
       - cp $CIRCLE_ARTIFACTS/*.rpm .
       - /bin/sh ./github-release.sh
-#  develop:
-#    branch: develop
-#    commands:
-#      - bundle install
-#      - bundle exec cap production deploy
-#  staging:
-#    branch: master
-#    commands:
-#      - bundle install
-#      - bundle exec cap staging deploy
-#  production:
-#    branch: release
-#    commands:
-#      - bundle install
-#      - bundle exec cap production deploy
