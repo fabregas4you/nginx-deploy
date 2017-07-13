@@ -15,7 +15,7 @@ apr apr-devel apr-util apr-util-devel pcre pcre-devel libxml2 libxml2-devel curl
 # set usr, change some /etc/* and others
 RUN useradd docker \
     && passwd -d docker \
-    && mkdir /home/docker \
+    && mkdir -p /home/docker \
     && chown docker:docker /home/docker \
     && addgroup docker staff \
     && addgroup docker sudo \
