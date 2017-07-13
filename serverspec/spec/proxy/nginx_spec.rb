@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-if os[:family] == 'redhat'
-  nginx_package = 'httpd'
-elsif os[:family] == 'debian' || os[:family] == 'ubuntu'
+if os[:family] == 'Redhat'
+  nginx_package = 'nginx'
+elsif os[:family] == 'Debian' || os[:family] == 'Ubuntu'
   nginx_package = 'nginx'
 end
 
