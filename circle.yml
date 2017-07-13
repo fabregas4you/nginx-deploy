@@ -13,7 +13,6 @@ dependencies:
 
 test:
   pre:
-    - echo "--- build start ---"
     - docker build -t centos6.8/nginx-rpm -f dockerfile-6.8 .
     - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
     commands:
