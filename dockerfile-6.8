@@ -3,7 +3,7 @@ MAINTAINER fabrefas4you
 
 # setup
 RUN yum update -y
-RUN yum install -y rpm-build tar git libtool automake autoconf autoheader autoreconf vim git sudo
+RUN yum install -y rpm-build tar git libtool automake autoconf autoheader autoreconf vim git sudo passwd openssh openssh-server openssh-clients
 
 # for mod_secirity
 RUN yum install -y httpd-devel apache2-prefork-dev apache2-threaded-dev apr-util-devel httpd-tools
