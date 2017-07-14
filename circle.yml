@@ -24,7 +24,8 @@ test:
     ## sample
     # - docker run -i -t bokiboki/circleci-test /spec_start.sh
     - docker run --name centos68-ssh -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" docker
-    - cd ansible && ansible-playbook -i inventory playbook.yml
+    # - cd ansible && ansible-playbook -i inventory playbook.yml
+    - cd ansible && ansible-playbook -i inventory playbook.yml -u docker --private-key="$HOME/$CIRCLE_PROJECT_REPONAME/ssh/id_rsa"
     - cd serverspec && bundle exec rake spec
   # post:
 
