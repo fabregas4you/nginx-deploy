@@ -1,4 +1,4 @@
-Host cenos68-ssh
+Host centos68-ssh
   HostName 0.0.0.0
   User docker
   Port 40022
