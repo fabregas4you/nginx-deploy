@@ -36,7 +36,8 @@ test:
     #
     ## copy rpm and install
     - cp $CIRCLE_ARTIFACTS/*.rpm .
-    - docker cp ./nginx-1.12.1-0.el6.x86_64.rpm centos6.8/nginx-test:/var/tmp/
+    - ls -l .
+    - docker cp nginx-1.12.1-0.el6.x86_64.rpm centos6.8/nginx-test:/var/tmp/
     - docker run --rm -it centos6.8/nginx-test rpm -ivh /var/tmp/nginx-1.12.1-0.el6.x86_64.rpm
     - cd serverspec && bundle exec rake spec
   # post:
