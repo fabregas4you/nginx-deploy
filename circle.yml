@@ -14,6 +14,7 @@ dependencies:
     # destory docker -rm ,if you want
     # - docker run --rm -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
     - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
+    - docker run --rm -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.1-0.el6.x86_64.rpm
 
 test:
   pre:
@@ -32,8 +33,6 @@ test:
     # - cd ansible && ansible-playbook -i inventory playbook.yml -u docker --private-key="~/.ssh/id_rsa"
     ## install local rpm 
     #- docker run --rm -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.1-0.el6.x86_64.rpm
-    - docker run --rm -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.1-0.el6.x86_64.rpm
-    # - docker run --rm -it centos6.8/nginx-rpm rpm -ivh $CIRCLE_ARTIFACTS/nginx-1.12.1-0.el6.x86_64.rpm
     - cd serverspec && bundle exec rake spec
   # post:
 
