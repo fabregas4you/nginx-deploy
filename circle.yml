@@ -31,7 +31,7 @@ test:
     # - cd ansible && ansible-playbook -i inventory playbook.yml
     # - cd ansible && ansible-playbook -i inventory playbook.yml -u docker --private-key="~/.ssh/id_rsa"
     ## install local rpm 
-    - docker run -v centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.0-5.el6.x86_64.rpm
+    - docker run --rm -v -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.0-5.el6.x86_64.rpm
     - cd serverspec && bundle exec rake spec
   # post:
 
