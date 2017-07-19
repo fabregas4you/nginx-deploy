@@ -28,20 +28,14 @@ test:
     ## sample
     # - docker run -i -t bokiboki/circleci-test /spec_start.sh
     # - docker run --name centos68-ssh -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" docker
-    ## install rpm on  docker
-    # - cd ansible && ansible-playbook -i inventory playbook.yml
-    # - cd ansible && ansible-playbook -i inventory playbook.yml -u docker --private-key="~/.ssh/id_rsa"
-    ## install local rpm 
-    #- docker run --rm -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.1-0.el6.x86_64.rpm
-    #
-    # - docker run -it centos6.8/nginx-rpm find /var -name *.rpm -print
     - cd serverspec && bundle exec rake spec
-  # post:
+  post:
+    - docker rm centos6.8/nginx-rpm
 
-# deployment:
-#   release:
-#     branch: master
-#     commands:
-#       - go get github.com/aktau/github-release
-#       - cp $CIRCLE_ARTIFACTS/*.rpm .
-#       - /bin/sh ./github-release.sh
+deployment:
+  release:
+    branch: master
+    commands:
+      - go get github.com/aktau/github-release
+      - cp $CIRCLE_ARTIFACTS/*.rpm .
+      - /bin/sh ./github-release.sh
