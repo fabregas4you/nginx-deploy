@@ -14,7 +14,7 @@ dependencies:
     # destory docker -rm ,if you want
     # - docker run --rm -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
     - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
-    # - docker build -t centos6.8/nginx-test -f dockerfile-6.8 .
+    - docker build -t centos6.8/nginx-test -f dockerfile-6.8 .
 
 test:
   pre:
@@ -34,14 +34,18 @@ test:
     ## install local rpm 
     #- docker run --rm -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.1-0.el6.x86_64.rpm
     #
-    - docker run --rm -it centos6.8/nginx-rpm ls -l /var/tmp
-    # - cd serverspec && bundle exec rake spec
+    ## copy rpm and install
+    - cp $CIRCLE_ARTIFACTS/*.rpm .
+    - ls -l .
+    - docker cp nginx-1.12.1-0.el6.x86_64.rpm centos6.8/nginx-test:/var/tmp/
+    - docker run --rm -it centos6.8/nginx-test rpm -ivh /var/tmp/nginx-1.12.1-0.el6.x86_64.rpm
+    - cd serverspec && bundle exec rake spec
   # post:
 
-# deployment:
-#   release:
-#     branch: master
-#     commands:
-#       - go get github.com/aktau/github-release
-#       - cp $CIRCLE_ARTIFACTS/*.rpm .
-#       - /bin/sh ./github-release.sh
+deployment:
+  release:
+    branch: master
+    commands:
+      - go get github.com/aktau/github-release
+      - cp $CIRCLE_ARTIFACTS/*.rpm .
+      - /bin/sh ./github-release.sh
