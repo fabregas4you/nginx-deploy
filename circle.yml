@@ -5,6 +5,8 @@ machine:
     - docker
   python:
     version: 2.7.12
+  ruby:
+    version: 2.3.4
 
 dependencies:  
   pre:
