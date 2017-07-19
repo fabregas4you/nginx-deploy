@@ -35,7 +35,7 @@ test:
     #- docker run --rm -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.1-0.el6.x86_64.rpm
     #
     # - docker run -v $CIRCLE_ARTIFACTS:/shared:rw -it centos6.8/nginx-rpm cp $CIRCLE_ARTIFACTS/*.rpm /var/tmp/
-    - docker run -it centos6.8/nginx-rpm find / -name *.rpm -print
+    - docker run -it centos6.8/nginx-rpm find /var -name *.rpm -print
     # - cd serverspec && bundle exec rake spec
   # post:
 
