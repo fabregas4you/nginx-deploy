@@ -31,8 +31,8 @@ test:
     # - docker run -i -t bokiboki/circleci-test /spec_start.sh
     - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" centos6.8/nginx-rpm
     - cd serverspec && bundle exec rake spec
-  post:
-    - docker rm centos6.8/nginx-rpm
+  # post:
+  #   - docker rm centos6.8/nginx-rpm
 
 deployment:
   release:
