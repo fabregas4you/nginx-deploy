@@ -1,4 +1,5 @@
 #!/bin/bash
+SSH_KEY="$(cat ~/.ssh/id_rsa.pub)"
 
 if [ -z "${SSH_KEY}" ]; then
   echo "=> Please pass your public key in the SSH_KEY environment variable"
