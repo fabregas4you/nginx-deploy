@@ -34,7 +34,7 @@ test:
     ## install local rpm 
     #- docker run --rm -it centos6.8/nginx-rpm rpm -ivh /var/tmp/rpmbuild/RPMS/x86_64/nginx-1.12.1-0.el6.x86_64.rpm
     #
-    - docker run --rm -it centos6.8/nginx-rpm ls -la /var/tmp/rpmbuild/RPMS/x86_64
+    - docker run --rm -it centos6.8/nginx-rpm ls -la /var/tmp/rpmbuild/RPMS
     # - cd serverspec && bundle exec rake spec
   # post:
 
