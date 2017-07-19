@@ -27,7 +27,7 @@ test:
   override:
     ## sample
     # - docker run -i -t bokiboki/circleci-test /spec_start.sh
-    - docker run -d centos6.8/nginx-rpm -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" docker
+    - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" centos6.8/nginx-rpm
     - cd serverspec && bundle exec rake spec
   post:
     - docker rm centos6.8/nginx-rpm

@@ -22,6 +22,7 @@ RUN useradd docker \
 
 # restart sshd
 RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
+RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 RUN /etc/init.d/sshd restart
 
 # build

@@ -1,5 +1,5 @@
 Host centos68-ssh
-  HostName
+  HostName localhost
   User docker
   Port 40022
   UserKnownHostsFile /dev/null
