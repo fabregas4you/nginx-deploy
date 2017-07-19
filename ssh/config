@@ -5,6 +5,6 @@ Host centos68-ssh
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
-  IdentityFile ./ssh/id_rsa
+  IdentityFile ~/.ssh/id_rsa
   IdentitiesOnly yes
   LogLevel FATAL
