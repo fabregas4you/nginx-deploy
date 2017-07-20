@@ -1,10 +1,10 @@
 Host centos68-ssh
-  HostName $(ip addr show docker0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+  HostName localhost
   User docker
   Port 22
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
-  IdentityFile ~/.ssh/id_rsa
+  IdentityFile ../ssh/id_rsa
   IdentitiesOnly yes
   LogLevel FATAL
