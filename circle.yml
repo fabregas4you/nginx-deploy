@@ -12,27 +12,32 @@ dependencies:
   pre:
     - pip install ansible
     - pip install --upgrade setuptools
-    - docker build -t centos6.8/nginx-rpm -f dockerfile-6.8 .
-    # destory docker -rm ,if you want
-    # - docker run --rm -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
-    - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
-    - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
-
-test:
-  pre:
-    - bundle -j4 --path=vendor/bundle
-    - mkdir -p ~/.ssh/
     - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/config ~/.ssh/config
     - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/id_rsa ~/.ssh/id_rsa
     - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
     - sudo chown 600 ~/.ssh/id_rsa
+    ## build docker
+    - docker build -t centos6.8/nginx-rpm -f dockerfile-6.8 .
+    ## build rpm
+    - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
+    # - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
+    - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)"  -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
+
+test:
+  pre:
+    - bundle -j4 --path=vendor/bundle
+    # - mkdir -p ~/.ssh/
+    # - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/config ~/.ssh/config
+    # - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/id_rsa ~/.ssh/id_rsa
+    # - cp $HOME/$CIRCLE_PROJECT_REPONAME/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
+    # - sudo chown 600 ~/.ssh/id_rsa
   override:
     ## sample
     # - docker run -i -t bokiboki/circleci-test /spec_start.sh
-    - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" centos6.8/nginx-rpm
+    # - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" centos6.8/nginx-rpm
     - cd serverspec && bundle exec rake spec
-  # post:
-  #   - docker rm centos6.8/nginx-rpm
+  post:
+    - docker rm centos6.8/nginx-rpm
 
 deployment:
   release:
