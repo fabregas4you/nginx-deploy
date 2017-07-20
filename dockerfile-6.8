@@ -18,7 +18,7 @@ RUN useradd docker \
     && mkdir -p /home/docker \
     && mkdir -p /home/docker/.ssh \
     && chown -R docker:docker /home/docker \
-    && chmod 700 /home/docker/,ssh \
+    && chmod 700 /home/docker/.ssh \
     && echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/docker \
     && true
 ADD authorized_keys /home/docker/.ssh/
