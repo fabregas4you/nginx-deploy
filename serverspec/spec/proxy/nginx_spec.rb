@@ -10,20 +10,26 @@ require 'spec_helper'
 # describe package(httpd_package) do
 #   it { should be_installed }
 # end
+describe package('nginx') do
+  it { should be_installed }
+end
 
 # check: httpd up
 # describe service(httpd_package) do
 #   it { should be_enabled }
 # end
 
-# check: deamon port
-# describe port(80) do
-#   it { should be_listening.with('tcp') }
+## check: deamon port
+# PORTS=['80','443']
+# PORTS.each do |port|
+#   describe port("#{port}") do
+#    it { should be_listening }
+#   end
 # end
 
-# check: deamon port
-# describe port(443) do
-#   it { should be_listening.with('tcp') }
+## check: response TLS
+# describe command('curl -H"Host: azure.hi-ga.to" http://localhost:443 -k') do
+#   its(:stdout) { should match /"ok" : true/ }
 # end
 
 # check: certs
