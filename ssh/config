@@ -1,5 +1,5 @@
 Host centos68-ssh
-  HostName localhost
+  HostName $(ip addr show docker0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
   User docker
   Port 22
   UserKnownHostsFile /dev/null
