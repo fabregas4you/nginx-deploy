@@ -1,12 +1,14 @@
 #!/bin/bash
-SSH_KEY="$(cat ~/.ssh/id_rsa.pub)"
+
+# SSH_KEY="$(cat ~/.ssh/id_rsa.pub)"
 
 if [ -z "${SSH_KEY}" ]; then
   echo "=> Please pass your public key in the SSH_KEY environment variable"
   exit 1
 fi
 
-for MYHOME in /root /home/docker; do
+# for MYHOME in /root /home/docker; do
+for MYHOME in /root ; do
   echo "=> Adding SSH key to ${MYHOME}"
   mkdir -p ${MYHOME}/.ssh
   chmod go-rwx ${MYHOME}/.ssh
@@ -14,7 +16,7 @@ for MYHOME in /root /home/docker; do
   chmod go-rw ${MYHOME}/.ssh/authorized_keys
   echo "=> Done!"
 done
-chown -R docker:docker /home/docker/.ssh
+# chown -R docker:docker /home/docker/.ssh
 
 echo "========================================================================"
 echo "You can now connect to this container via SSH using:"

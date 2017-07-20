@@ -1,7 +1,7 @@
 Host centos68-ssh
   HostName localhost
   User docker
-  Port 22
+  Port 20022
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
