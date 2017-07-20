@@ -1,17 +1,27 @@
 require 'spec_helper'
 
 if os[:family] == 'Redhat'
-  nginx_package = 'nginx'
+  httpd_package = 'httpd'
 elsif os[:family] == 'Debian' || os[:family] == 'Ubuntu'
-  nginx_package = 'nginx'
+  httpd_package = 'httpd'
 end
 
-# chech: nginx installed
-describe package(nginx_package) do
+# chech: httpd installed
+describe package(httpd_package) do
   it { should be_installed }
 end
 
-# check: nginx up
-describe service(nginx_package) do
+# check: httpd up
+describe service(httpd_package) do
   it { should be_enabled }
+end
+
+# check: deamon port
+describe port(80) do
+  it { should be_listening.with('tcp') }
+end
+
+# check: deamon port
+describe port(443) do
+  it { should be_listening.with('tcp') }
 end
