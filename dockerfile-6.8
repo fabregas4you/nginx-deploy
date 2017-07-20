@@ -21,7 +21,7 @@ RUN useradd docker \
     && chmod 700 /home/docker/.ssh \
     && echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/docker \
     && true
-ADD authorized_keys /home/docker/.ssh/
+COPY ssh/id_rsa.pub /home/docker/.ssh/authorized_keys
 RUN chown -R docker:docker /home/docker/.ssh/authorized_keys \
     && chmod 600 /home/docker/.ssh/authorized_keys
 
