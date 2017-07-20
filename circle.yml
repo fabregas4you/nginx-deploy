@@ -21,7 +21,7 @@ dependencies:
     ## build rpm
     - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
     # - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
-    - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)"  -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
+    - docker run -d -p 40022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
 
 test:
   pre:

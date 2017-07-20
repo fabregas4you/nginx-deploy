@@ -16,9 +16,14 @@ apr apr-devel apr-util apr-util-devel pcre pcre-devel libxml2 libxml2-devel curl
 RUN useradd docker \
     && passwd -d docker \
     && mkdir -p /home/docker \
-    && chown docker:docker /home/docker \
+    && mkdir -p /home/docker/.ssh \
+    && chown -R docker:docker /home/docker \
+    && chmod 700 /home/docker/,ssh \
     && echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/docker \
     && true
+ADD authorized_keys /home/docker/.ssh/
+RUN chown -R docker:docker /home/docker/.ssh/authorized_keys \
+    && chmod 600 /home/docker/.ssh/authorized_keys
 
 # restart sshd
 RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
@@ -47,4 +52,3 @@ RUN chmod +x /*.sh
 # EXPOSE 22
 EXPOSE 40022
 CMD ["/do.sh"]
-
