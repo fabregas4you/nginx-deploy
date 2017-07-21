@@ -21,12 +21,13 @@ dependencies:
     ## build rpm
     - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm /bin/sh ./nginxbuild.sh
     # - docker run -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
-    # - docker run -d -p 20022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" centos6.8/nginx-rpm 
+    - docker run -d -p 20022:22 -v $CIRCLE_ARTIFACTS:/shared:rw -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" centos6.8/nginx-rpm 
 
 test:
   pre:
     - bundle -j4 --path=vendor/bundle
-    - docker run -d -p 20022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm && /bin/bash
+    # - docker run -d -p 20022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm && /bin/bash
+    - cd nginx-deploy && sudo chown 400 ssh/id_rsa && ssh -i ssh/id_rsa -p 20022 docker@localhost rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
   override:
     - cd serverspec && bundle exec rake spec
   # post:
