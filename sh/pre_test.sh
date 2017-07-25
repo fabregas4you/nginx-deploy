@@ -85,7 +85,6 @@ else
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS 
   done && \
   ssh -i $PKEY -p $PORTS $TARGETS << EOF
-  echo "Hello." > index.html &&  python -m SimpleHTTPServer 8080 &;
   sudo -s;
   copy_sslfiles;
   copy_modsecfile;
