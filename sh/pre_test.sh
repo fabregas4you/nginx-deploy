@@ -83,7 +83,7 @@ else
   for i in $CUSTCONF $MODSCONF $CERTS $KEYS
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS 
-  done && \
+  done
   ssh -i $PKEY -p $PORTS $TARGETS << EOF
     sudo -s;
     cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
