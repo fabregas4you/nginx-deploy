@@ -51,7 +51,7 @@ else
   for i in $CUSTCONF $MODSCONF $CERTS $KEYS
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS 
-  done
+  done && \
   ssh -i $PKEY -p $PORTS -t -t $TARGETS "
     sudo -s
     cp $DIRS/$CUSTCONF $DEST_CUST
