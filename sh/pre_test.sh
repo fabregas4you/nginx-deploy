@@ -2,6 +2,7 @@
 
 ## parameter
 CUSTCONF='customer.conf'
+DEST_CUST='/opt/nginx/conf/customers'
 MODSCONF='modsecurity_default.conf'
 DEST_MODS='/opt/nginx/conf/modsecurity'
 CERTS='ssl/certs/sample.crt'
@@ -38,40 +39,6 @@ start_ngx() {
         exit $ret
     fi
 }
-configtest() {
-    ${exec} -t -c ${daemon_config} 2>&1
-    ret=$?
-    if [ $ret -eq 0 ]; then
-        echo "[OK]"
-    else
-        echo "[NG]"
-        exit $ret
-    fi
-}
-configtest_q() {
-    configtest > /dev/null 2>&1
-}
-ngx_status() {
-    status -p ${pidfile} ${PROG}
-}
-ngx_status_q() {
-    ngx_status > /dev/null 2>&1
-}
-reload_conf() {
-    ngx_status_q || exit 1
-    configtest_q || exit 1
-    echo -n "reload config : "
-    # kill -HUP
-    kill -HUP `cat ${pidfile}`
-    ret=$?
-    if [ $ret -eq 0 ]; then
-        echo "[OK]"
-    else
-        echo "[NG]"
-        exit $ret
-    fi
-}
-
 ## main
 `nc -z -w5 $SERVER $PORTS`
 STATUS=$?
@@ -80,15 +47,17 @@ if [  "$STATUS" != 0 ]; then
   echo 'port 20022 not OPEN'
   exit 1
 else
+  echo "Docker Alive, Go head"
   for i in $CUSTCONF $MODSCONF $CERTS $KEYS
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS 
   done
   ssh -i $PKEY -p $PORTS -t -t $TARGETS << EOF
     sudo -s;
-    cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
-    cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
-    cp $DIRS/$MODSCONF $DEST_MODS
-    /etc/init.d/nginx start
+    cp $DIRS/$CUSTCONF $DEST_CUST;
+    cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS;
+    cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS;
+    cp $DIRS/$MODSCONF $DEST_MODS;
+    /etc/init.d/nginx start;
 EOF
 fi
