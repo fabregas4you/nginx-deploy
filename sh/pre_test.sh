@@ -84,7 +84,7 @@ else
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS 
   done
-  ssh -i $PKEY -p $PORTS -t $TARGETS << EOF
+  ssh -i $PKEY -p $PORTS -t -t $TARGETS << EOF
     sudo -s;
     cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
     cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
