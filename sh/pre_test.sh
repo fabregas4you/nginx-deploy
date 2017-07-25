@@ -86,7 +86,8 @@ else
   done && \
   ssh -i $PKEY -p $PORTS $TARGETS << EOF
   sudo -s;
-  cp $DIRS/$CERTS $DEST_CERTS && cp $DIRS/$KEYS $DEST_KEYS;
+  cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}' $DEST_KEYS;
+
   cp $DIRS/$MODSCONF $DEST_MODS;
   start_ngx;
 EOF
