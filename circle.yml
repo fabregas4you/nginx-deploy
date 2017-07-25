@@ -27,8 +27,10 @@ test:
   pre:
     - bundle -j4 --path=vendor/bundle
     # - docker run -d -p 20022:22 -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -v $CIRCLE_ARTIFACTS:/shared:rw centos6.8/nginx-rpm rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm && /bin/bash
-    - pwd
     - sudo chown 400 ssh/id_rsa && ssh -i ssh/id_rsa -p 20022 docker@localhost sudo -s rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
+    # - scp -i ssh/id_rsa -p 20022 docker@localhost:/var/tmp && ssh -i ssh/id_rsa -p 20022 docker@localhost sudo -s cp -f /var/tmp/
+    - python -m SimpleHTTPServer 8080 &
+    - /bin/sh sh/pre_test.sh
   override:
     - cd serverspec && bundle exec rake spec
   # post:
