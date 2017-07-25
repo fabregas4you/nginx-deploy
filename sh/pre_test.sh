@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## parameter
 CUSTCONF='customer.conf'
@@ -19,10 +19,10 @@ daemon_options="/etc/sysconfig/${PROG}"
 pidfile="/var/run/nginx.pid"
 
 ## copy files
-copy_sslfiles() {
+copy_sslfiles () {
   cp $DIRS/$CERTS $DEST_CERTS && cp $DIRS/$KEYS $DEST_KEYS  
 }
-copy_modsecfile() {
+copy_modsecfile () {
   cp $DIRS/$MODSCONF $DEST_MODS
 }
 ## nginx 
@@ -86,8 +86,8 @@ else
   done && \
   ssh -i $PKEY -p $PORTS $TARGETS << EOF
   sudo -s;
-  copy_sslfiles;
-  copy_modsecfile;
+  cp $DIRS/$CERTS $DEST_CERTS && cp $DIRS/$KEYS $DEST_KEYS;
+  cp $DIRS/$MODSCONF $DEST_MODS;
   start_ngx;
 EOF
 fi
