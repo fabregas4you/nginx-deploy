@@ -90,5 +90,5 @@ else
   copy_sslfiles;
   copy_modsecfile;
   start_ngx;
-  EOF
+EOF
 fi
