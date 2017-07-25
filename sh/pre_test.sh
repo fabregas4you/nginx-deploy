@@ -82,7 +82,7 @@ if [  "$STATUS" != 0 ]; then
 else
   for i in $CUSTCONF $MODSCONF $CERTS $KEYS
   do
-    scp -i $PKEY -p $PORTS $i $TARGETS:$DIRS 
+    scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS 
   done && \
   ssh -i $PKEY -p $PORTS $TARGETS << EOF
   echo "Hello." > index.html &&  python -m SimpleHTTPServer 8080 &;
