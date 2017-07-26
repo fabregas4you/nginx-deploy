@@ -52,7 +52,7 @@ else
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
   done && \
-  ssh -i $PKEY -p $PORTS -t -t $TARGETS << EOF
+  ssh -i $PKEY -p $PORTS -t -t $TARGETS "
     sudo -s;
     cp $DIRS/$CUSTCONF $DEST_CUST
     cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
@@ -61,5 +61,5 @@ else
     /etc/init.d/nginx start
     exit
     exit
-  EOF
+  "
 fi
