@@ -21,16 +21,16 @@ pidfile="/var/run/nginx.pid"
 
 ## copy files
 copy_sslfiles () {
-  cp $DIRS/$CERTS $DEST_CERTS && cp $DIRS/$KEYS $DEST_KEYS  
+  cp $DIRS/$CERTS $DEST_CERTS && cp $DIRS/$KEYS $DEST_KEYS
 }
 copy_modsecfile () {
   cp $DIRS/$MODSCONF $DEST_MODS
 }
-## nginx 
+## nginx
 start_ngx() {
     configtest_q || exit 1
     echo -n "start nginx : "
-     /etc/init.d/nginx  start 
+     /etc/init.d/nginx  start
     ret=$?
     if [ $ret -eq 0 ]; then
         echo "[OK]"
@@ -50,14 +50,14 @@ else
   echo "Docker Alive, Go head"
   for i in $CUSTCONF $MODSCONF $CERTS $KEYS
   do
-    scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS 
+    scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
   done && \
   ssh -i $PKEY -p $PORTS -t -t $TARGETS << EOF
     sudo -s;
-    cp $DIRS/$CUSTCONF $DEST_CUST;
-    cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS;
-    cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS;
-    cp $DIRS/$MODSCONF $DEST_MODS;
+    # cp $DIRS/$CUSTCONF $DEST_CUST;
+    # cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS;
+    # cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS;
+    # cp $DIRS/$MODSCONF $DEST_MODS;
     /etc/init.d/nginx start;
   EOF
 fi
