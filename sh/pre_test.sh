@@ -64,5 +64,5 @@ else
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
   done && \
-  ssh -i $PKEY -p $PORTS -t -t $TARGET "$(set); run_remote"
+  ssh -i $PKEY -p $PORTS -t -t $TARGETS "$(set); run_remote"
 fi
