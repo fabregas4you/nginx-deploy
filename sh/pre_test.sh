@@ -53,12 +53,12 @@ else
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
   done && \
   ssh -i $PKEY -p $PORTS -t -t $TARGETS "
-    sudo -s;
-    cp $DIRS/$CUSTCONF $DEST_CUST
-    cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
-    cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
-    cp $DIRS/$MODSCONF $DEST_MODS
-    /etc/init.d/nginx start
+    sudo -s && /etc/init.d/nginx start
+    # cp $DIRS/$CUSTCONF $DEST_CUST
+    # cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
+    # cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
+    # cp $DIRS/$MODSCONF $DEST_MODS
+    # /etc/init.d/nginx start
     exit
     exit
   "
