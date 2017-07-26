@@ -41,7 +41,7 @@ start_ngx() {
 }
 ## run at docker
 run_remote() {
-  sudo -s
+  sudo -s;
   cp $DIRS/$CUSTCONF $DEST_CUST
   cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
   cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
@@ -63,6 +63,6 @@ else
   for i in $CUSTCONF $MODSCONF $CERTS $KEYS
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
-  done && \
-  ssh -i $PKEY -p $PORTS -t -t $TARGETS "$(set); run_remote"
+  done
+  ssh -i $PKEY -p $PORTS -t -t $TARGETS "$(typeset -f); run_remote"
 fi
