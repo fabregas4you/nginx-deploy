@@ -37,13 +37,11 @@ if [ `ls -l /var/tmp/sample.* 2>/dev/null | wc -l` -gt 2 ]; then
     echo "Config file not enough!"
   exit 1
 else
-  echo "Config files OK, Go head" && \
+  echo "Config files ok, Go ahead" && \
   cp -f $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
   cp -f $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS && \
   cp -f $DIRS/$MODSCONF $DEST_MODS && \
   cp -f $DIRS/$CUSTCONF $DEST_CUST && \
-  # echo $? && \
-  echo "copy ok, nginx start" && \
-  /etc/init.d/nginx start && \
-  echo $? 
+  echo "Ready to start Nginx!" && \
+  /etc/init.d/nginx start
 fi
