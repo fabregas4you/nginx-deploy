@@ -38,8 +38,9 @@ if [ `ls -l /var/tmp/sample.* 2>/dev/null | wc -l` -gt 2 ]; then
   exit 1
 else
   echo "Config files OK, Go head"
+  sudo -s \
   copy_sslfiles && \
   copy_modsecfile && \
-  copy_custconf && \
+  copy_custconf && 
   /etc/init.d/nginx start
 fi
