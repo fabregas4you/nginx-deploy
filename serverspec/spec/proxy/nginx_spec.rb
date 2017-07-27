@@ -28,7 +28,7 @@ end
 # end
 
 ## check: response TLS
-describe command('curl -H"Host: azure.hi-ga.to" http://localhost:443 -k') do
+describe command('curl -H"Host: azure.hi-ga.to" https://0.0.0.0:443 -k') do
   its(:stdout) { should match /"ok" : true/ }
 end
 
