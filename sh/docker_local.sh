@@ -39,14 +39,12 @@ if [ `ls -l /var/tmp/sample.* 2>/dev/null | wc -l` -gt 2 ]; then
 else
   echo "Config files OK, Go head" && \
   sudo -s && \
-  cp -f $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
-  echo $? && \
-  cp -f $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS && \
-  echo $? && \
-  cp -f $DIRS/$MODSCONF $DEST_MODS && \
-  echo $? && \
-  cp -f $DIRS/$CUSTCONF $DEST_CUST && \
-  echo $? && \
-  echo "copy ok, nginx start" && \
-  /etc/init.d/nginx start && echo $? 
+  # cp -f $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
+  # cp -f $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS && \
+  # cp -f $DIRS/$MODSCONF $DEST_MODS && \
+  # cp -f $DIRS/$CUSTCONF $DEST_CUST && \
+  # echo $? && \
+  # echo "copy ok, nginx start" && \
+  /etc/init.d/nginx start && \
+  echo $? 
 fi
