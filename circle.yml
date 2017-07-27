@@ -30,6 +30,7 @@ test:
     - sudo chown 400 ssh/id_rsa && ssh -i ssh/id_rsa -p 20022 docker@localhost sudo -s rpm -ivh /shared/nginx-1.12.1-0.el6.x86_64.rpm
     # - scp -i ssh/id_rsa -p 20022 docker@localhost:/var/tmp && ssh -i ssh/id_rsa -p 20022 docker@localhost sudo -s cp -f /var/tmp/
     - /bin/sh sh/pre_test.sh
+    - ssh -i ssh/id_rsa -p 20022 docker@localhost sudo -s /bin/sh /var/tmp/docker_local.sh
   override:
     - cd serverspec && bundle exec rake spec
   # post:

@@ -16,7 +16,6 @@ PORTS=20022
 DIRS=/var/tmp
 PROG="nginx"
 EXEC="/opt/nginx/sbin/nginx"
-REMOTE_DOCKER="sh/docker_local.sh"
 daemon_options="/etc/sysconfig/${PROG}"
 pidfile="/var/run/nginx.pid"
 
@@ -27,29 +26,19 @@ copy_sslfiles () {
 copy_modsecfile () {
   cp $DIRS/$MODSCONF $DEST_MODS
 }
-## run at docker
-run_remote() {
-  sudo -s
+copy_custconf () {
   cp $DIRS/$CUSTCONF $DEST_CUST
-  cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS
-  cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
-  cp $DIRS/$MODSCONF $DEST_MODS
-  /etc/init.d/nginx start
-  exit
-  exit
 }
 
 ## main
-`nc -z -w5 $SERVER $PORTS`
-STATUS=$?
 
-if [ "$STATUS" != 0 ]; then
-  echo 'tcp/20022, not OPEN'
+if [ `ls -1 /var/tmp/* 2>/dev/null | wc -l ` -gt 3 ]; then
+    echo "Config file not enough!"
   exit 1
 else
-  echo "Docker Alive, Go head"
-  for i in $CUSTCONF $MODSCONF $CERTS $KEYS $REMOTE_DOCKER
-  do
-    scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
-  done
+  echo "Config files OK, Go head"
+  copy_sslfiles && \
+  copy_modsecfile && \
+  copy_custconf && \
+  /etc/init.d/nginx start
 fi
