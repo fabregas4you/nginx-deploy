@@ -21,14 +21,14 @@ pidfile="/var/run/nginx.pid"
 
 ## copy files
 copy_sslfiles () {
-  cp $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
-  cp $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
+  cp -f $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
+  cp -f $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS
 }
 copy_modsecfile () {
-  cp $DIRS/$MODSCONF $DEST_MODS
+  cp -f $DIRS/$MODSCONF $DEST_MODS
 }
 copy_custconf () {
-  cp $DIRS/$CUSTCONF $DEST_CUST
+  cp -f $DIRS/$CUSTCONF $DEST_CUST
 }
 
 ## main
@@ -39,8 +39,9 @@ if [ `ls -l /var/tmp/sample.* 2>/dev/null | wc -l` -gt 2 ]; then
 else
   echo "Config files OK, Go head"
   sudo -s \
-  copy_sslfiles && \
-  copy_modsecfile && \
-  copy_custconf && 
+  cp -f $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
+  cp -f $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS && \
+  cp -f $DIRS/$MODSCONF $DEST_MODS && \
+  cp -f $DIRS/$CUSTCONF $DEST_CUST && \
   /etc/init.d/nginx start
 fi
