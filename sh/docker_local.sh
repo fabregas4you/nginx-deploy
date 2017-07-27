@@ -48,5 +48,6 @@ else
   cp -f $DIRS/$CUSTCONF $DEST_CUST && \
   cp -f $DIRS/$MAINCONF $MAINDEST && \
   echo "Ready to start Nginx!" && \
-  /etc/init.d/nginx start
+  # /etc/init.d/nginx start
+  /opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf
 fi
