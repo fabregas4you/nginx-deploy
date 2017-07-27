@@ -32,7 +32,7 @@ copy_custconf () {
 
 ## main
 
-if [ `ls -l /var/tmp/* 2>/dev/null | wc -l` -gt 3 ]; then
+if [ `ls -l /var/tmp/sample.* 2>/dev/null | wc -l` -gt 2 ]; then
     echo "Config file not enough!"
   exit 1
 else
