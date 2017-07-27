@@ -3,6 +3,8 @@
 ## parameter
 MAINCONF='nginx.conf'
 MAINDEST='/opt/nginx/conf'
+UPSTREAMCONF='upstreams_8080.conf'
+UPSTREAMDEST='/opt/nginx/conf/upstreams'
 CUSTCONF='customer.conf'
 DEST_CUST='/opt/nginx/conf/customers'
 MODSCONF='modsecurity_default.conf'
@@ -47,7 +49,7 @@ if [ "$STATUS" != 0 ]; then
   exit 1
 else
   echo "Docker Alive, Go head"
-  for i in $MAINCONF $CUSTCONF $MODSCONF $CERTS $KEYS $REMOTE_DOCKER $UNICODECONF
+  for i in $MAINCONF $UPSTREAMCONF $CUSTCONF $MODSCONF $CERTS $KEYS $REMOTE_DOCKER $UNICODECONF
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
   done

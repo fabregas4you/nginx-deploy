@@ -3,6 +3,8 @@
 ## parameter
 MAINCONF='nginx.conf'
 MAINDEST='/opt/nginx/conf'
+UPSTREAMCONF='upstreams_8080.conf'
+UPSTREAMDEST='/opt/nginx/conf/upstreams'
 CUSTCONF='customer.conf'
 DEST_CUST='/opt/nginx/conf/customers'
 MODSCONF='modsecurity_default.conf'
@@ -47,6 +49,7 @@ else
   cp -f $DIRS/$UNICODECONF $DEST_MODS && \
   cp -f $DIRS/$CUSTCONF $DEST_CUST && \
   cp -f $DIRS/$MAINCONF $MAINDEST && \
+  cp -f $DIRS/$UPSTREAMCONF $UPSTREAMDEST && \
   echo "Ready to start Nginx!" && \
   # /etc/init.d/nginx start
   /opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf
