@@ -1,9 +1,12 @@
 #!/bin/bash
 
 ## parameter
+MAINCONF='nginx.conf'
+MAINDEST='/opt/nginx/conf'
 CUSTCONF='customer.conf'
 DEST_CUST='/opt/nginx/conf/customers'
 MODSCONF='modsecurity_default.conf'
+UNICODECONF='unicode.mapping'
 DEST_MODS='/opt/nginx/conf/modsecurity'
 CERTS='ssl/certs/sample.crt'
 KEYS='ssl/keys/sample.key'
@@ -14,11 +17,7 @@ TARGETS=docker@localhost
 SERVER=localhost
 PORTS=20022
 DIRS=/var/tmp
-PROG="nginx"
-EXEC="/opt/nginx/sbin/nginx"
 REMOTE_DOCKER="sh/docker_local.sh"
-daemon_options="/etc/sysconfig/${PROG}"
-pidfile="/var/run/nginx.pid"
 
 ## copy files
 copy_sslfiles () {
@@ -48,7 +47,7 @@ if [ "$STATUS" != 0 ]; then
   exit 1
 else
   echo "Docker Alive, Go head"
-  for i in $CUSTCONF $MODSCONF $CERTS $KEYS $REMOTE_DOCKER
+  for i in $MAINCONF $CUSTCONF $MODSCONF $CERTS $KEYS $REMOTE_DOCKER $UNICODECONF
   do
     scp -i $PKEY -P $PORTS $i $TARGETS:$DIRS
   done

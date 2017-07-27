@@ -117,6 +117,7 @@ install -d ${RPM_BUILD_ROOT}/%{nginx_home}/logs
 install -d ${RPM_BUILD_ROOT}/%{nginx_home}/cache
 install -d ${RPM_BUILD_ROOT}/%{nginx_home}/conf/customers
 install -d ${RPM_BUILD_ROOT}/%{nginx_home}/conf/upstreams
+install -d ${RPM_BUILD_ROOT}/%{nginx_home}/conf/modsecurity
 install -d ${RPM_BUILD_ROOT}/%{nginx_home}/ssl/key
 install -d ${RPM_BUILD_ROOT}/%{nginx_home}/ssl/crt
 
@@ -172,12 +173,6 @@ fi
 %endif
 
 %config(noreplace) %{nginx_home}/*
-# %{nginx_home}/sbin/nginx
-# %{nginx_home}/html/*
-# %{nginx_home}/logs
-# %{nginx_home}/cache
-# %{nginx_home}/ssl/crt
-# %{nginx_home}/ssl/key
 
 %if 0%{?centos} <= 6
   /etc/init.d/nginx

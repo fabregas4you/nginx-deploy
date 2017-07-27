@@ -1,9 +1,12 @@
 #!/bin/bash
 
 ## parameter
+MAINCONF='nginx.conf'
+MAINDEST='/opt/nginx/conf'
 CUSTCONF='customer.conf'
 DEST_CUST='/opt/nginx/conf/customers'
 MODSCONF='modsecurity_default.conf'
+UNICODECONF='unicode.mapping'
 DEST_MODS='/opt/nginx/conf/modsecurity'
 CERTS='ssl/certs/sample.crt'
 KEYS='ssl/keys/sample.key'
@@ -41,7 +44,9 @@ else
   cp -f $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
   cp -f $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS && \
   cp -f $DIRS/$MODSCONF $DEST_MODS && \
+  cp -f $DIRS/$UNICODECONF $DEST_MODS && \
   cp -f $DIRS/$CUSTCONF $DEST_CUST && \
+  cp -f $DIRS/$MAINCONF $MAINDEST && \
   echo "Ready to start Nginx!" && \
   /etc/init.d/nginx start
 fi
