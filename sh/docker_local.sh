@@ -62,7 +62,7 @@ STATUS=$?
 
 if [ "$STATUS" != 0 ]; then
   echo 'Starting tiny Backends on 8080'
-  python -m SimpleHTTPServer 8080
+  python -m SimpleHTTPServer 8080 &>/dev/null &disown
 else
   echo 'Port 8080 already in use, quit.'
 fi
