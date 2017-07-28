@@ -54,3 +54,13 @@ else
   # /etc/init.d/nginx start
   /opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf
 fi
+
+cd $DIR && echo "Hello" > index,html
+`nc -z -w5 $SERVER $WEBPORTS`
+STATUS=$?
+
+if [ "$STATUS" != 0 ]; then
+  python -m SimpleHTTPServer 8080 &
+else
+  echo 'Alreedy use tcp/8080'
+fi
