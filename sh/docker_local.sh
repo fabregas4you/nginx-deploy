@@ -56,7 +56,7 @@ else
   /opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf
 fi
 
-cd $DIR && echo "Hello" > index,html
+cd $DIRS && echo "Hello" > index,html
 `nc -z -w5 $SERVER $WEBPORTS`
 STATUS=$?
 
