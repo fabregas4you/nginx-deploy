@@ -1,14 +1,14 @@
 #!/bin/bash
 
 ## parameter
-MAINCONF='nginx.conf'
+MAINCONF='conf/nginx.conf'
 MAINDEST='/opt/nginx/conf'
-UPSTREAMCONF='upstreams_8080.conf'
+UPSTREAMCONF='conf/upstreams_8080.conf'
 UPSTREAMDEST='/opt/nginx/conf/upstreams'
-CUSTCONF='customer.conf'
+CUSTCONF='conf/customer.conf'
 DEST_CUST='/opt/nginx/conf/customers'
-MODSCONF='modsecurity_default.conf'
-UNICODECONF='unicode.mapping'
+MODSCONF='conf/modsecurity_default.conf'
+UNICODECONF='conf/unicode.mapping'
 DEST_MODS='/opt/nginx/conf/modsecurity'
 CERTS='ssl/certs/sample.crt'
 KEYS='ssl/keys/sample.key'

@@ -2,7 +2,7 @@
 
 VERSION=$(cat nginx-version)
 USER="fabregas4you"
-REPO="nginx-build"
+REPO="nginx-deploy"
 DATE=`date +%Y%m%d%H%M`
 
 # create release
