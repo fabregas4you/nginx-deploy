@@ -18,6 +18,7 @@ PKEY='ssh/id_rsa'
 TARGETS=docker@localhost
 SERVER=localhost
 PORTS=20022
+WEBPORTS=8080
 DIRS=/var/tmp
 PROG="nginx"
 EXEC="/opt/nginx/sbin/nginx"
