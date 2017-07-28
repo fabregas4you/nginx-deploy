@@ -50,7 +50,7 @@ else
   cp -f $DIRS/`echo $UNICODECONF |sed 's/\// /g' |awk '{print $2}'` $DEST_MODS && \
   cp -f $DIRS/`echo $CUSTCONF |sed 's/\// /g' |awk '{print $2}'` $DEST_CUST && \
   cp -f $DIRS/`echo $UPSTREAMCONF |sed 's/\// /g' |awk '{print $2}'` $UPSTREAMDEST && \
-  cp -f $DIRS/$MAINCONF $MAINDEST && \
+  cp -f $DIRS/`echo $MAINCONF |sed 's/\// /g' |awk '{print $2}'` $MAINDEST && \
   echo "Ready to start Nginx!" && \
   # /etc/init.d/nginx start
   /opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf
