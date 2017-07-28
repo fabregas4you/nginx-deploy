@@ -61,7 +61,8 @@ cd $DIRS && echo "Hello" > index,html
 STATUS=$?
 
 if [ "$STATUS" != 0 ]; then
-  python -m SimpleHTTPServer 8080 &
+  echo 'Starting tiny Backends on 8080'
+  python -m SimpleHTTPServer 8080
 else
-  echo 'Alreedy use tcp/8080'
+  echo 'Port 8080 already in use, quit.'
 fi
