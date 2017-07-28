@@ -46,11 +46,11 @@ else
   echo "Config files ok, Go ahead" && \
   cp -f $DIRS/`echo $CERTS |sed 's/\// /g' |awk '{print $3}'` $DEST_CERTS && \
   cp -f $DIRS/`echo $KEYS |sed 's/\// /g' |awk '{print $3}'` $DEST_KEYS && \
-  cp -f $DIRS/$MODSCONF $DEST_MODS && \
-  cp -f $DIRS/$UNICODECONF $DEST_MODS && \
-  cp -f $DIRS/$CUSTCONF $DEST_CUST && \
+  cp -f $DIRS/`echo $MODSCONF |sed 's/\// /g' |awk '{print $2}'` $DEST_MODS && \
+  cp -f $DIRS/`echo $UNICODECONF |sed 's/\// /g' |awk '{print $2}'` $DEST_MODS && \
+  cp -f $DIRS/`echo $CUSTCONF |sed 's/\// /g' |awk '{print $2}'` $DEST_CUST && \
+  cp -f $DIRS/`echo $UPSTREAMCONF |sed 's/\// /g' |awk '{print $2}'` $UPSTREAMDEST && \
   cp -f $DIRS/$MAINCONF $MAINDEST && \
-  cp -f $DIRS/$UPSTREAMCONF $UPSTREAMDEST && \
   echo "Ready to start Nginx!" && \
   # /etc/init.d/nginx start
   /opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf
