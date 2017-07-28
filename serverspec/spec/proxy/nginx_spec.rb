@@ -28,8 +28,11 @@ end
 # end
 
 ## check: response TLS
-describe command('curl -H"Host: azure.hi-ga.to" https://0.0.0.0:443 -k') do
-  its(:stdout) { should match /"ok" : true/ }
+# describe command('curl -sL -w "%{http_code}\\n" "www.example.com" -o /dev/null | sed "s/200/OK/" | sed "s/302/OK/"') do
+#  its(:stdout) { should match 'OK' }
+# end
+describe command('curl -sL -w "%{http_code}\\n" -H"Host: azure.hi-ga.to" https://0.0.0.0:443 -k -o /dev/null | sed "s/200/OK/" | sed "s/302/OK/"') do
+  its(:stdout) { should match 'OK' }
 end
 
 # check: certs
